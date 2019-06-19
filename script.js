@@ -12,31 +12,70 @@ function getHasil(comp, player) {
 
     if (player == 'gajah') return (comp == 'orang') ? 'MENANG' : 'KALAH';
     if (player == 'orang') return (comp == 'gajah') ? 'KALAH' : 'MENANG';
-    if (player == 'semut') return (comp == 'orang') ? 'MENANG' : 'KALAH';
+    if (player == 'semut') return (comp == 'orang') ? 'KALAH' : 'MENANG';
+}
+
+
+function putar() {
+    const img = document.querySelector('.img-komputer');
+    const gambar = ['gajah', 'orang', 'semut'];
+    i = 0;
+    const waktuMulai = new Date().getTime();
+
+    setInterval(function () {
+
+        if (new Date().getTime() - waktuMulai > 900) {
+            clearInterval;
+            return;
+        }
+
+        img.setAttribute('src', 'img/' + gambar[i++] + '.png');
+        if (i == gambar.length) i = 0;
+    }, 100)
 
 }
 
 
+
 const pilihan = document.querySelectorAll('li img');
 const info = document.querySelector('.info');
-// console.log(pGajah);
-pilihan.forEach(function(pil){
-    
-    pil.addEventListener('click', function(){
-        console.log(pil);
-        const pilihanComputer = getPilihanComputer();
-        const pilihanPlayer = pil.className;
-        const hasil = getHasil(pilihanComputer, pilihanPlayer);
-    
-        const imgCom = document.querySelector('.img-komputer');
-    
-        imgCom.setAttribute('src', 'img/' + pilihanComputer + '.png');
-    
-        info.innerHTML = hasil;
-    });
-        
 
+// console.log(pilihan);
+pilihan.forEach(function (el) {
+
+
+    el.addEventListener('click', function () {
+        const pilihanComputer = getPilihanComputer();
+        const pilihanPlayer = el.className;
+        console.log(pilihanPlayer);
+        const hasil = getHasil(pilihanComputer, pilihanPlayer);
+
+        putar();
+
+        setTimeout(function () {
+            const imgCom = document.querySelector('.img-komputer');
+
+            imgCom.setAttribute('src', 'img/' + pilihanComputer + '.png');
+
+            info.innerHTML = hasil;
+        }, 1000);
+
+
+    });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
